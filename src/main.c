@@ -1,19 +1,25 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <sys/socket.h>
+#include <sys/mman.h>
 #include <arpa/inet.h>
 #include <net/ethernet.h>
+#include <time.h>
 
 #include "capture/packet.h"
 
+// NOTE: For whatever reason, when using ping,
+// it is printing the packet twice
 void handler(const struct packet* pkt);
 void handler(const struct packet* pkt) {
-	printf("Packet length: %zu\n", pkt -> len);
+	printf("Packet Length: %zu\n", pkt -> len);
+	printf("Packet TS: %s\n", asctime(localtime(&pkt -> ts.tv_sec)));
+	printf("\n");
 }
 
 int main(void) {
 	printf("Initializing nmu...\n");
 	capture_start("vethA", handler);
+	munmap(ring, req.tp_block_size * req.tp_block_nr);
 	printf("Closing nmu...\n");
 	return 0;
 }
