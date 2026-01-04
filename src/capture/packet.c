@@ -17,7 +17,7 @@
 
 const size_t buffer_size = 2048;
 
-int capture_start(const char *iface, packet_handler handler) {
+int capture_start(const char *iface, void* ring, packet_handler handler) {
 	int fd = socket(AF_PACKET, SOCK_RAW, htons(ETH_P_ALL));
 	if (fd < 0)  {
 		fprintf(stderr, "Failed to open socket, check permissions");
@@ -39,7 +39,7 @@ int capture_start(const char *iface, packet_handler handler) {
 	if (req.tp_frame_size < TPACKET_ALIGNMENT)
 		abort();
 	setsockopt(fd, SOL_PACKET, PACKET_RX_RING, &req, sizeof(req));
-	void* ring = mmap(
+	ring = mmap(
 			NULL,
 			req.tp_block_size * req.tp_block_nr,
 			PROT_READ | PROT_WRITE,

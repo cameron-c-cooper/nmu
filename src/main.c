@@ -18,8 +18,9 @@ void handler(const struct packet* pkt) {
 
 int main(void) {
 	printf("Initializing nmu...\n");
-	capture_start("vethA", handler);
-	munmap(ring, req.tp_block_size * req.tp_block_nr);
+	void* ring = NULL;
+	capture_start("vethA", ring, handler);
+	munmap(ring, (1<<20)*64); // manually calc tp_block_size * tp_block_nbr
 	printf("Closing nmu...\n");
 	return 0;
 }
