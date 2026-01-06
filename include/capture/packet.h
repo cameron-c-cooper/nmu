@@ -17,7 +17,6 @@ struct packet_view {
 };
 
 typedef void (*packet_handler)(const struct packet *pkt);
-int capture_start(const char* iface, void* ring, packet_handler handler);
 
 static inline int pv_has(const struct packet_view* pv, size_t n) {
 	return pv -> offset + n <= pv -> len;

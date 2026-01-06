@@ -1,4 +1,6 @@
 CC := gcc
+C_STD := gnu23
+INT_C_STD := -std=$(C_STD)
 PROJ_ROOT := $(patsubst %/,%,$(dir $(realpath $(lastword $(MAKEFILE_LIST)))))
 SRC_DIR := $(PROJ_ROOT)/src
 INC_DIR := $(PROJ_ROOT)/include
@@ -18,13 +20,24 @@ CWARNINGS		:= -Wall -Wextra -Wpedantic -pedantic-errors -Werror -Waggregate-retu
 				   -Wno-unused-function -Wno-error=unused-variable
 CFLAGS := $(CWARNINGS) -g -I$(INC_DIR)
 
+nmu: info $(BIN)
+	@echo "Finished compiling."
+
+info:
+	@echo "Project Root: 	$(PROJ_ROOT)"
+	@echo "C Compiler: 		$(CC)"
+	@echo "C Standard: 		$(C_STD)"
+	@echo "Compiling with flags: "
+
+
 $(BIN): $(OBJ)
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -o $@ $^
+	@$(CC) $(CFLAGS) -o $@ $^
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
+	@echo "Compiling $<..."
 
 clean:
 	@echo "Cleaning build directory..."
