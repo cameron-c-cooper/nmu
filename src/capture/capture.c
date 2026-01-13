@@ -68,7 +68,7 @@ int capture_start(struct capture_ctx* ctx, const char* iface) {
 	return 1;
 }
 
-int capture_run(struct capture_ctx* ctx, packet_handler handler) {
+int capture_run(struct capture_ctx* ctx, packet_decoder decoder) {
 	struct pollfd pfd = {
 		.fd = ctx -> fd,
 		.events = POLLIN
@@ -94,7 +94,7 @@ int capture_run(struct capture_ctx* ctx, packet_handler handler) {
 					.tv_nsec = pkt -> tp_nsec,
 				}
 			};
-			handler(&p);
+			decoder(&p);
 			pkt = (void*)((uint8_t*)pkt + pkt -> tp_next_offset);
 		}
 		block -> hdr.bh1.block_status = TP_STATUS_KERNEL;

@@ -16,7 +16,7 @@ struct packet_view {
 	size_t offset;
 };
 
-typedef void (*packet_handler)(const struct packet *pkt);
+typedef void (*packet_decoder)(const struct packet *pkt);
 
 static inline int pv_has(const struct packet_view* pv, size_t n) {
 	return pv -> offset + n <= pv -> len;

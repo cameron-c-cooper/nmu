@@ -16,5 +16,5 @@ struct capture_ctx {
 };
 
 int capture_start(struct capture_ctx* ctx, const char* iface);
-int capture_run(struct capture_ctx* ctx, packet_handler handler);
+int capture_run(struct capture_ctx* ctx, packet_decoder decoder);
 void capture_close(struct capture_ctx* ctx);
