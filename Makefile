@@ -18,7 +18,7 @@ CWARNINGS		:= -Wall -Wextra -Wpedantic -pedantic-errors -Werror -Waggregate-retu
 				   -Wshadow -Wstrict-prototypes -Wswitch -Wundef -Wunreachable-code \
 				   -Wunused-but-set-parameter -Wwrite-strings \
 				   -Wno-unused-function -Wno-error=unused-variable
-CFLAGS := $(CWARNINGS) -g -I$(INC_DIR)
+CFLAGS := $(INT_C_STD) $(CWARNINGS) -g -I$(INC_DIR)
 
 nmu: info $(BIN)
 	@echo "Finished compiling."
