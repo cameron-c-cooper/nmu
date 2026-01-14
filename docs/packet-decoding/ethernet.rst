@@ -20,7 +20,8 @@ opening the christmas card before the present, you know?
 
 Additionally the function  ``decode_ethernet()`` will return the pointer to the
 payload of the ethernet frame to allow the calling function to discover where
-the proper 'location' to start reading data from is.
+the proper 'location' to start reading data from is into the offset field of the
+``packet_view`` parameter.
 
 The EtherType is what will determine if there is additional processing within
 the ``decode_ethernet()`` as that contains information on the payload. The main
