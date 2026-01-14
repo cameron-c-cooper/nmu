@@ -28,9 +28,9 @@ the ethernet packet/frame.
 Just as a matter of convenience, we will only be focusing on Ethernet Type II
 frames, it makes dealing with this much simpler and it is what the Internet
 Protocol uses so it is very widespread already. Another quick note, as I will
-forget this is that the linux kernel will strip the preamble, SFD, and IPG from
-the packet to form the full frame so I do not need to read just values based on
-anything from there.
+forget this is that the linux kernel will strip the preamble, SFD, FCS, and IPG
+from the packet to form the full frame so I do not need to read just values 
+based on anything from there.
 
 ------------
 VLAN Effects
