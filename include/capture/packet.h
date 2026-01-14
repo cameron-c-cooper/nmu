@@ -13,7 +13,7 @@ struct packet {
 struct packet_view {
 	const uint8_t* data;
 	size_t len;
-	size_t offset;
+	size_t offset; // current offset into the data
 };
 
 typedef void (*packet_decoder)(const struct packet *pkt);
@@ -26,6 +26,10 @@ static inline const void* pv_ptr(const struct packet_view *pv) {
 	return pv -> data + pv -> offset;
 }
 
+// the one thing i hate about this function is that it just assumes
+// order is going to be EXTREMELY regular. I guess that with size_t
+// being a signed integer value I could just advance by a negative
+// but that still feels messy
 static inline void pv_advance(struct packet_view *pv, size_t n) {
 	pv -> offset += n;
 }

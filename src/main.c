@@ -5,7 +5,7 @@
 #include <net/ethernet.h>
 #include <time.h>
 #include <signal.h>
-
+#include "decode/decode.h"
 #include "capture/capture.h"
 #include "capture/packet.h"
 
