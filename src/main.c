@@ -3,19 +3,25 @@
 #include <sys/mman.h>
 #include <arpa/inet.h>
 #include <net/ethernet.h>
-#include <time.h>
 #include <signal.h>
 #include "decode/decode.h"
 #include "capture/capture.h"
 #include "capture/packet.h"
 
-// NOTE: For whatever reason, when using ping,
-// it is printing the packet twice
+// handler should construct the packet view and
+// then pass it to the decoder
 void handler(const struct packet* pkt);
 void handler(const struct packet* pkt) {
-	printf("Packet Length: %zu\n", pkt -> len);
-	printf("Packet TS: %s\n", asctime(localtime(&pkt -> ts.tv_sec)));
-	printf("\n");
+	// not really sure if this function even needs pkt? i will say though that
+	// it could help out with timestamps in the future when I dont need the
+	// timestamps to decode the packet. thoughts for the future.
+	struct packet_view pv = {
+		.data = pkt -> data,
+		.len = pkt -> len,
+		.offset = 0
+	};
+	struct packet_metadata pmd;
+	decode_packet(&pv, &pmd);
 }
 
 static struct capture_ctx* global_ctx;
