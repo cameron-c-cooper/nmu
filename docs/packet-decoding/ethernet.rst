@@ -18,6 +18,10 @@ There are some things that I should avoid, such as inspecting IP headers,
 assuming IPv4 vs IPv6, tracking flows, or reassembling anything. Its like
 opening the christmas card before the present, you know?
 
+Additionally the function will return the pointer to the payload of the
+ethernet frame to allow the calling function to discover where the proper
+'location' to start reading data from is.
+
 The EtherType is what will determine if there is additional processing within
 the ``decode_ethernet()`` as that contains information on the payload. The main
 area where it may change something is if something is tagged with VLAN as the
