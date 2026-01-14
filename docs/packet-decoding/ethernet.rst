@@ -58,6 +58,7 @@ TPID (Tag protocol identifier):
 
 TCI (Tag control information):
   * A 16-bit field containing the following sub-fields:
+
     * PCP is a 3 bit field refering to the 802.1p class of service and maps to
       the frame priority level. Different PCP values prioritize different
       classes of traffic
