@@ -3,7 +3,10 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <stdio.h>
+#include <errno.h>
 #include "capture/packet.h"
+#include "decode/arp.h"
+
 
 enum ethertype : uint16_t {
 	IPv4 = 0x0800,
@@ -70,6 +73,33 @@ struct ethernet_metadata {
 	uint8_t mac_dst[6];
 	uint8_t mac_src[6];
 };
+
+struct ethernet_payload_metadata {
+	enum ethertype et;
+	union {
+		struct arp_metadata arpmd;
+		/* IPv4, ARP, etc */
+	};
+};
+
+typedef int (*ethertype_decoder_fn)(const uint8_t* data, size_t len, struct ethernet_payload_metadata* eth_md);
+
+static inline int decode_payload(
+		enum ethertype et,
+		const uint8_t* data,
+		size_t len,
+		struct ethernet_payload_metadata* eth_md,
+		struct ethernet_metadata* parent,
+) {
+	eth_md -> et = et;
+	switch (et) {
+	case ARP:
+		decode_arp_payload(
+	default:
+		return -ENOTSUP;
+	}
+	return -1;
+}
 
 int decode_ethernet(struct packet_view* pv, struct ethernet_metadata *out);
 
