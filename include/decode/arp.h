@@ -1,7 +1,9 @@
 #pragma once
-#include "decode/eth.h"
 #include <stdint.h>
+#include <stddef.h>
+#include "decode/eth.h"
 
+// This is the most common arp ipv4 setup
 struct arp_metadata {
 	/* 
 	 * TODO: Decide if this struct should contain the dst/src values. It
@@ -12,10 +14,19 @@ struct arp_metadata {
 	 * be set to the pointer of the src and dst values within the parent
 	 * ethe
 	 */
-
-	uint16_t dst[6];
-	uint16_t src[6];
-	uint16_t prototype;
+	uint16_t htype;
+	uint16_t ptype;
+	uint8_t hlen;
+	uint8_t plen;
+	uint16_t oper;
+	uint8_t s_hw_addr[6];
+	uint8_t s_proto_addr[4];
+	uint8_t t_hw_addr[6];
+	uint8_t t_proto_addr[4];
 };
 
-int decode_arp_payload(const uint8_t* data, size_t len, struct arp_metadata* md, struct ethernet_metadata* m_md);
+int decode_arp_payload(
+		const uint8_t* data,
+		size_t len,
+		struct arp_metadata* md
+);
