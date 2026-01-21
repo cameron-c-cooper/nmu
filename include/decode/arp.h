@@ -1,7 +1,7 @@
 #pragma once
 #include <stdint.h>
 #include <stddef.h>
-#include "decode/eth.h"
+#include <stdio.h>
 
 // This is the most common arp ipv4 setup
 struct arp_metadata {
@@ -30,3 +30,11 @@ int decode_arp_payload(
 		size_t len,
 		struct arp_metadata* md
 );
+
+static inline int arp_fmt(char* buf, size_t buflen, const struct arp_metadata* amd) {
+	return snprintf(buf, buflen,
+			// should already know addresses
+			"htype=0x%04x ptype=0x%04x hlen=%d plen=%d oper=0x%04x",
+			amd -> htype, amd -> ptype, amd -> hlen, amd -> plen, amd -> oper
+			);
+}
